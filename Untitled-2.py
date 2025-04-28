@@ -1,5 +1,6 @@
 import tensorflow as tf
 
-IMG_SIZE = (224,224)
+image_size = (224, 224)
+batch_size = 32
 
 
