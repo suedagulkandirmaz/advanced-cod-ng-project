@@ -1,4 +1,6 @@
 import TensorFlow as tf
+print(tf.__version__)
+import numpy as np
 import PIL 
 import image
 import os
@@ -17,6 +19,12 @@ for plant in classes:
 
 
 
+
+
+
+
+
+=====oop classes====
 class Plant:
     def __init__(self, name):
         self.name = name
