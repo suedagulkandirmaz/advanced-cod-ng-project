@@ -117,3 +117,4 @@ if __name__ == "__main__":
         json.dump(train_data.class_indices, f)
 
     print("Model ve sınıf etiketleri kaydedildi.")
+
