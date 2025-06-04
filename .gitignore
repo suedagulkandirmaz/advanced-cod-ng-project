@@ -1,2 +1,5 @@
-archive.zip
+# Sistem ve kullanıcı verileri
+AppData/
+*.log
+*.old
 
