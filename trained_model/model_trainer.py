@@ -6,101 +6,34 @@ import os
 
 def model_trainer(moel, train_loader, val_loader, num_epochs, device, model_saver):
     model = model.to(device)
-    
+    loss_fn = nn.CrossEntropyLoss()
+    opt = optim.Adam(model.parameters(), Ir=0.001)
+
+    highest_acc = 0
+
+    for epoch in range(num_epochs):
+        model.train()
+        epoch_loss = 0
+        total, true = 0, 0
+        for x, y in tqdm(train_data, desc=f"Training Epoch {epoch+1}"):
+            x, y = x.model.to(device), y.model.to(device)
+            opt.zero_grade()
+            pred = model(x) 
+            loss = loss_fn(pred,y)
+            loss.backward()
+            opt.step()
+
+            epoch_loss += loss.item()
+            predicted = torch.argmax(predicted)
+            total += y.size(0)
+            true += (predicted == y).sum().item()
+
+        acc = check_accuracy(model, val_data, device)
+        print(f"Epoch{ep+1} | Loss: {epoch_loss:.3f} | Val Accuracy: {acc:.2f}%")
+
+        if acc > highest_acc:
+            highest_acc = acc
+            store_model_weights(model, save_path)
+            print("New model saved")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def plot_training_graph(history, save=False, file_name="training_plot.png"):
-    plt.style.use("ggplot")
-
-    plt.figure(figsize=(14, 4))
-
-    plt.subplot(1, 2, 1)
-    plt.plot(history.history['accuracy'], label='Training Accuracy', color='blue')
-    plt.plot(history.history['val_accuracy'], label='Validation Accuracy', color='green')
-    plt.title("Accuracy")
-    plt.xlabel("Epoch")
-    plt.ylabel("Accuracy")
-    plt.legend()
-    plt.grid(True)
-
-    plt.subplot(1, 2, 2)
-    plt.plot(history.history['loss'], label='Training Loss', color='red')
-    plt.plot(history.history['val_loss'], label='Validation Loss', color='orange')
-    plt.title("Loss")
-    plt.xlabel("Epoch")
-    plt.ylabel("Loss")
-    plt.legend()
-    plt.grid(True)
-
-    plt.tight_layout()
-
-    if save:
-        plt.savefig(file_name)
-        print(f"Plot saved as {file_name}")
-    else:
-        plt.show()
-
-
-if __name__ == "__main__":
-    dataset_path = 'PlantVillage'  
-    train_data, val_data = prepare_data(dataset_path)
-
-    num_classes = len(train_data.class_indices)
-    model = create_CNN_model(num_classes=num_classes)
-
-    history = model.fit(
-        train_data,
-        epochs=10,
-        validation_data=val_data
-    )
-
-    
-    plot_training_graph(history, save=True)
-
-    
-    model.save("plant_disease_model.h5")
-
-
-    with open("class_indices.json", "w") as f:
-        json.dump(train_data.class_indices, f)
-
-    print("Model and class saved.")
