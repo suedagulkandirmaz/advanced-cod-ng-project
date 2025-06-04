@@ -1,4 +1,6 @@
 # data_loader.py
+print("Script is working!")
+
 import os
 from torchvision.datasets import ImageFolder
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
@@ -15,13 +17,13 @@ class PlantDiseaseDataLoader:
                       std=[0.229, 0.224, 0.225])
         ])
 
-def get_data_loader(directory_path, batch_size=32):
-    preprocessing_steps = Compose([
-        Resize((256, 256)),
-        ToTensor()
-    ])
+def get_data_loader(self):
+    train_dir = os.path.join(self.data_dir, "train")
+    val_dir = os.path.join(self.data_dir, "val")
 
-    image_dataset = ImageFolder(root=directory_path, transform=preprocessing_steps)
-    data_loader = DataLoader(dataset=image_dataset, batch_size=batch_size, shuffle=True)
-
-    return data_loader, image_dataset.classes
+    train_dataset = datasets.ImageFolder(train_dir, transform=self.transform)
+    val_dataset = datasets.ImageFolder(val_dir, transform=self.transform)
+    train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=self.batch_size, shuffle=False)
+    
+    return train_loader, val_loader
