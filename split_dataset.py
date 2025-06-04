@@ -28,7 +28,7 @@ def split_dataset(input_dir, output_dir, split_ratio=0.8):
         for img in val_imgs:
             shutil.copy(os.path.join(class_dir, img), os.path.join(val_cls_dir, img))
 
-        print(f"{cls} sınıfı için: {len(train_imgs)} train, {len(val_imgs)} val görsel kopyalandı.")
+        print(f"{cls} for class: {len(train_imgs)} train, {len(val_imgs)} val image is copy.")
 
 if __name__ == "__main__":
     input_dir = "data/raw"

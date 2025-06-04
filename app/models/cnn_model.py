@@ -1,7 +1,7 @@
 import torch.nn as nn
 class plantCNN(nn.Module):
     def __init__(self, total_classes=13):
-        super(plantCNN, self).self__init__
+        super(plantCNN, self).__init__()
     
 #FEATURES
 
